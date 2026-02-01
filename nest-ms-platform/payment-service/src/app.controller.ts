@@ -19,7 +19,6 @@ import { traceContext } from './common/middleware/trace-context';
 export class AppController {
   @MessagePattern({ cmd: 'get_payments' })
   getPayments() {
-    return [{ id: 1, name: 'Payment' }];
     console.log(
       'nest-ms-platform/payment-service-tcp AppController traceId:',
       traceContext.getStore()?.traceId,
