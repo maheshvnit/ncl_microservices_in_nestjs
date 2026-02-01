@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggerModule } from 'nestjs-pino';
-import { TraceIdTcpInterceptor } from './common/middleware/trace-id-tcp.interceptor';
+//import { TraceIdTcpInterceptor } from './common/middleware/trace-id-tcp.interceptor';
+import { TcpTraceServerInterceptor } from './common/interceptors/tcp-trace-server.interceptor';
 import { traceContext } from './common/middleware/trace-context';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -35,7 +36,7 @@ import { AppService } from './app.service';
     AppService,
     {
       provide: APP_INTERCEPTOR,
-      useClass: TraceIdTcpInterceptor,
+      useClass: TcpTraceServerInterceptor,
     },
   ],
 })
