@@ -19,6 +19,7 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    networks: [observability]
 
   prometheus:
     image: prom/prometheus
@@ -26,6 +27,7 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
+    networks: [observability]
 
   grafana:
     image: grafana/grafana
@@ -34,6 +36,7 @@ services:
     volumes:
       - grafana-storage:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
+    networks: [observability]
 
   loki:
     image: grafana/loki
@@ -41,6 +44,7 @@ services:
       - "3100:3100"
     volumes:
       - ./loki/config.yaml:/etc/loki/config.yaml
+    networks: [observability]
 
   promtail:
     image: grafana/promtail
@@ -49,6 +53,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./promtail/promtail-config.yaml:/etc/promtail/config.yaml
     command: -config.file=/etc/promtail/config.yaml
+    networks: [observability]
 
   tempo:
     image: grafana/tempo:2.4.0
@@ -58,6 +63,12 @@ services:
     volumes:
       - ./tempo/tempo-config.yaml:/etc/tempo-config.yaml
     command: ["--config.file=/etc/tempo-config.yaml"]
+    networks: [observability]
 
 volumes:
   grafana-storage:
+
+networks:
+  observability:
+    name: observability
+    driver: bridge

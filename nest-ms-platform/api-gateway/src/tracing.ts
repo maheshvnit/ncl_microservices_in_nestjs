@@ -7,7 +7,7 @@ import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
 
 const sdk = new NodeSDK({
   resource: resourceFromAttributes({
-    [SemanticResourceAttributes.SERVICE_NAME]: 'my-nestjs-app',
+    [SemanticResourceAttributes.SERVICE_NAME]: 'nest-ms-platform/api-gateway',
     [SemanticResourceAttributes.SERVICE_VERSION]: '1.0.0',
     [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: 'production',
   }),

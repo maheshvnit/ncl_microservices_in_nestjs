@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "4040:4100"
+    depends_on:
+      - user-service
+      - order-service
+      - payment-service
+    networks: [observability]
+
+  user-service:
+    build: ./user-service
+    networks: [observability]
+
+  order-service:
+    build: ./order-service
+    networks: [observability]
+
+  payment-service:
+    build: ./payment-service
+    networks: [observability]
+
+networks:
+  observability:
+    external: true
