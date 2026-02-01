@@ -1,58 +1,24 @@
-// import { Module } from '@nestjs/common';
-// import { AppController } from './app.controller';
-// import { AppService } from './app.service';
-
-// @Module({
-//   imports: [],
-//   controllers: [AppController],
-//   providers: [AppService],
-// })
-// export class AppModule {}
-
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-} from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
+import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggerModule } from 'nestjs-pino';
-import { PrometheusModule } from '@willsoto/nestjs-prometheus';
-
-import { TraceIdMiddleware } from './common/middleware/trace-id.middleware';
+import { TraceIdTcpInterceptor } from './common/middleware/trace-id-tcp.interceptor';
+import { traceContext } from './common/middleware/trace-context';
 
 @Module({
   imports: [
-    PrometheusModule.register(),
-
     LoggerModule.forRoot({
-      pinoHttp: {
-        level: 'info',
-
-        // 👇 inject traceId into every log
-        // customProps: (req) => ({
-        //   traceId: (req as any).traceId,
-        // }),
-
-        customProps: (req: any) => ({
-          traceId: req.traceId,
-        }),
-
-
-        transport:
-          process.env.NODE_ENV !== 'production'
-            ? { target: 'pino-pretty' }
-            : undefined,
+      pinoHttp: false, // 🔴 important for pure TCP
+      customProps: () => {
+        const store = traceContext.getStore();
+        return store ? { traceId: store.traceId } : {};
       },
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TraceIdTcpInterceptor,
+    },
+  ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(TraceIdMiddleware).forRoutes('*');
-  }
-}
-
+export class AppModule {}

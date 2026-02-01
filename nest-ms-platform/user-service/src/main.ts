@@ -1,14 +1,5 @@
 import './tracing'; // MUST be first
 
-// import { NestFactory } from '@nestjs/core';
-// import { AppModule } from './app.module';
-
-// async function bootstrap() {
-//   const app = await NestFactory.create(AppModule);
-//   await app.listen(process.env.PORT ?? 3104);
-// }
-// bootstrap();
-
 import { NestFactory } from '@nestjs/core';
 import * as dotenv from 'dotenv';
 dotenv.config();

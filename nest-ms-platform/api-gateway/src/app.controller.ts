@@ -1,19 +1,7 @@
-// import { Controller, Get } from '@nestjs/common';
-// import { AppService } from './app.service';
-
-// @Controller()
-// export class AppController {
-//   constructor(private readonly appService: AppService) {}
-
-//   @Get()
-//   getHello(): string {
-//     return this.appService.getHello();
-//   }
-// }
-
 import { Controller, Get, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
+import { traceContext } from './common/middleware/trace-context';
 
 @Controller()
 export class AppController {
@@ -25,16 +13,19 @@ export class AppController {
 
   @Get('/users')
   users() {
-    return firstValueFrom(this.user.send({ cmd: 'get_users' }, {}));
+    const traceId = traceContext.getStore()?.traceId;
+    return firstValueFrom(this.user.send({ cmd: 'get_users' }, {traceId}));
   }
 
   @Get('/orders')
   orders() {
-    return firstValueFrom(this.order.send({ cmd: 'get_orders' }, {}));
+    const traceId = traceContext.getStore()?.traceId;
+    return firstValueFrom(this.order.send({ cmd: 'get_orders' }, {traceId}));
   }
 
   @Get('/payments')
   payments() {
-    return firstValueFrom(this.payment.send({ cmd: 'get_payments' }, {}));
+    const traceId = traceContext.getStore()?.traceId;
+    return firstValueFrom(this.payment.send({ cmd: 'get_payments' }, {traceId}));
   }
 }

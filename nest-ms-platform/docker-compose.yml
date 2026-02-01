@@ -5,6 +5,7 @@ services:
     build: ./api-gateway
     ports:
       - "4040:4100"
+      - "9465:9465"
     depends_on:
       - user-service
       - order-service
@@ -13,14 +14,22 @@ services:
 
   user-service:
     build: ./user-service
+    ports:
+      - "9466:9466"    
+    entrypoint: []
+    command: ["node", "dist/main.js"]    
     networks: [observability]
 
   order-service:
     build: ./order-service
+    ports:
+      - "9467:9467"     
     networks: [observability]
 
   payment-service:
     build: ./payment-service
+    ports:
+      - "9468:9468"      
     networks: [observability]
 
 networks:
