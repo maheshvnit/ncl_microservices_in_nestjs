@@ -10,6 +10,9 @@ import './tracing'; // MUST be first
 // bootstrap();
 
 import { NestFactory } from '@nestjs/core';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import { AppModule } from './app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 

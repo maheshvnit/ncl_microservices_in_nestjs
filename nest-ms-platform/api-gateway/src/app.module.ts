@@ -9,12 +9,73 @@
 // })
 // export class AppModule {}
 
-import { Module } from '@nestjs/common';
+// import { Module } from '@nestjs/common';
+// import { ClientsModule, Transport } from '@nestjs/microservices';
+// import { AppController } from './app.controller';
+
+// @Module({
+//   imports: [
+//     ClientsModule.register([
+//       {
+//         name: 'USER',
+//         transport: Transport.TCP,
+//         options: { host: 'user-service', port: 4101 },
+//       },
+//       {
+//         name: 'ORDER',
+//         transport: Transport.TCP,
+//         options: { host: 'order-service', port: 4102 },
+//       },
+//       {
+//         name: 'PAYMENT',
+//         transport: Transport.TCP,
+//         options: { host: 'payment-service', port: 4103 },
+//       },
+//     ]),
+//   ],
+//   controllers: [AppController],
+// })
+// export class AppModule {}
+
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+} from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
+import { LoggerModule } from 'nestjs-pino';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
+
+import { TraceIdMiddleware } from './common/middleware/trace-id.middleware';
 
 @Module({
   imports: [
+    PrometheusModule.register(),
+
+    LoggerModule.forRoot({
+      pinoHttp: {
+        level: 'info',
+
+        // 👇 inject traceId into every log
+        // customProps: (req) => ({
+        //   traceId: (req as any).traceId,
+        // }),
+
+        customProps: (req: any) => ({
+          traceId: req.traceId,
+        }),
+
+
+        transport:
+          process.env.NODE_ENV !== 'production'
+            ? { target: 'pino-pretty' }
+            : undefined,
+      },
+    }),
+
     ClientsModule.register([
       {
         name: 'USER',
@@ -34,5 +95,10 @@ import { AppController } from './app.controller';
     ]),
   ],
   controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(TraceIdMiddleware).forRoutes('*');
+  }
+}
