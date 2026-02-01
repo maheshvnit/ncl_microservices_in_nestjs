@@ -7,10 +7,24 @@ import { traceContext } from './common/middleware/trace-context';
 @Module({
   imports: [
     LoggerModule.forRoot({
-      pinoHttp: false, // 🔴 important for pure TCP
-      customProps: () => {
-        const store = traceContext.getStore();
-        return store ? { traceId: store.traceId } : {};
+      pinoHttp: {
+        level: process.env.LOG_LEVEL ?? 'info',
+
+        // Prevent HTTP request/response noise in TCP services
+        serializers: {
+          req: () => undefined,
+          res: () => undefined,
+        },
+
+        formatters: {
+          log(object) {
+            const store = traceContext.getStore();
+            return {
+              ...object,
+              traceId: store?.traceId,
+            };
+          },
+        },
       },
     }),
   ],
