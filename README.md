@@ -12,11 +12,11 @@
 
 ✅ Battle-tested locally before cloud deployment
 
+![Overall Architecture](docs/ms-docker-compose.png)
+
 ## Open Source Monitoring Stack
 
 End-to-end **logs, metrics, and traces** observability for a **Dockerized NestJS application** using the **Grafana LGTM stack** (Loki, Grafana, Tempo, Prometheus) with **OpenTelemetry**.
-
-![Overall Architecture](docs/architecture-overview-01.png)
 
 ---
 
@@ -46,7 +46,7 @@ The project includes complete configurations + Docker setup for:
 
 - **Tempo** — distributed tracing storage
 
-- **NestJS App** — sample backend instrumented for logs, metrics, and traces
+- **NestJS Microservices** — sample Microservices instrumented with TCP and logs, metrics, and traces
 
 All components are orchestrated via a single docker-compose.yml to spin up the full stack locally.
 
@@ -57,7 +57,7 @@ All components are orchestrated via a single docker-compose.yml to spin up the f
 Here’s what the core folders represent:
 
 ```
-
+├── nest-ms-platform/        # Sample NestJS Microservices
 ├── grafana/                 # Grafana provisioning (datasources)
 ├── loki/                    # Loki config
 ├── prometheus/              # Prometheus config
@@ -73,10 +73,15 @@ Here’s what the core folders represent:
 
 ## 🧱 Architecture Overview
 
-![Overall Architecture](docs/architecture-overview.png)
+![Overall Architecture](docs/ms-docker-compose.png)
 
 ### High-Level Flow
 
+0. **NestJS Microservices**
+   - Microservices communication with **TCP**
+   - Structured logging with **Pino**
+   - Metrics via **nestjs-prometheus**
+   - Distributed tracing via **OpenTelemetry**
 1. **NestJS Application**
    - Structured logging with **Pino**
    - Metrics via **nestjs-prometheus**
@@ -114,57 +119,9 @@ Here’s what the core folders represent:
     - ✅ Log ↔ Metric ↔ Trace correlation using traceId
  
 
-### 📜 Logs (Loki)
-
-![Logs Flow](docs/logs-flow.png)
-
-- JSON logs via **Pino**
-- Each log line includes:
-  - `traceId`
-  - `spanId`
-  - `service.name`
-- Logs shipped using **Promtail**
 
 ---
 
-### 📊 Metrics (Prometheus)
-
-![Metrics Flow](docs/metrics-flow.png)
-
-- Application metrics exposed at `/metrics`
-- Includes:
-  - HTTP request duration
-  - Request count
-  - Error rates
-  - Process & Node.js metrics
-
----
-
-### 🧵 Traces (Tempo + OpenTelemetry)
-
-![Traces Flow](docs/traces-flow.png)
-
-- Automatic + manual spans
-- Context propagation across async boundaries
-- Trace export using **OTLP**
-- Stored and queried in **Tempo**
-
----
-
-## 🔗 Correlation with traceId
-
-![Correlation](docs/correlation.png)
-
-From **Grafana**, you can:
-
-- Jump from a **log line → trace**
-- Jump from a **trace → related logs**
-- Correlate **metrics spikes → exact traces**
-
-This answers:
-> *What happened? Where? And why?*
-
----
 
 ## 📁 Folder Structure
 
@@ -191,18 +148,40 @@ monitoring/
 
 ````
 
+```
+
+nest-ms-platform/
+├── api-gateway/            # HTTP based API root endpoint for all microservices
+│   ├── src/
+│   ├── Dockerfile
+│   └── package.json
+└── user-service/           # TCP based user-service microservice
+│   ├── src/
+│   ├── Dockerfile
+│   └── package.json
+└── order-service/          # TCP based user-service microservice
+│   ├── src/
+│   ├── Dockerfile
+│   └── package.json
+└── payment-service/        # TCP based user-service microservice
+│   ├── src/
+│   ├── Dockerfile
+│   └── package.json
+└── docker-compose.yml      # Docker Compose setup
+
+````
+
 ## 🐳 Dockerized Setup
 
-![Docker Compose](docs/docker-compose.png)
+![MS Docker Compose](docs/ms-docker-compose.png)
 
 All components run via **Docker Compose**:
 
-- `my-nestjs-app`
-- `prometheus`
-- `loki`
-- `promtail`
-- `tempo`
-- `grafana`
+- `api-gateway`
+- `user-service`
+- `order-service`
+- `payment-service`
+- `redis`
 
 ---
 
