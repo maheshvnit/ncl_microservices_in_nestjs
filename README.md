@@ -36,6 +36,64 @@ End-to-end **logs, metrics, and traces** observability for a **Dockerized NestJS
 
 ---
 
+## 📌 What This Project Demonstrates
+
+This project demonstrates how to design, build, and run **production-grade microservices** using **NodeJS and NestJS**, with a strong focus on reliability, correctness, and operational excellence.
+
+It covers the **real-world patterns required in distributed systems**, not just basic service communication.
+
+## 🚀 Core Focus Areas
+
+- NodeJS / NestJS Microservices
+
+   - TCP-based and HTTP-based service communication
+
+   - Clean modular architecture with shared libraries
+
+   - Explicit service boundaries and contracts
+
+- Retry + Circuit Breaker Policies
+
+   - Resilient client patterns to handle transient failures
+
+   - Controlled retries with backoff
+
+   - Circuit breakers to prevent cascading failures
+
+- Strong Idempotency Guarantees
+
+   - Safe handling of duplicate requests
+
+   - Protection against double processing (especially for payments)
+
+   - Deterministic request handling across retries
+
+- Full Observability (Metrics, Logs, Traces)
+
+   - Structured JSON logging with trace correlation
+
+   - Prometheus metrics per service
+
+   - Distributed tracing across microservices
+
+   - Unified visibility via Grafana stack
+
+- Battle-Tested Locally Before Cloud Deployment
+
+   - Docker-based local orchestration
+
+   - Failure simulation and resilience testing
+
+   - Designed to behave the same locally and in cloud environments
+
+
+## 🎯 Goal of This Repository
+
+The goal is to serve as a reference implementation for building robust, observable, and resilient NestJS microservices that are ready for real production workloads — not just demos or tutorials.
+
+
+---
+
 ## 🚀 What This Project Demonstrates
 
 This repository shows how to build **true observability (not just monitoring)** by correlating:
