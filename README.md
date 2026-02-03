@@ -101,7 +101,7 @@ Each microservice will handle its own logic and communicate with others via **Ne
 
 This guide focuses on **TCP** for simplicity — messaging brokers like Kafka/RabbitMQ are optional next steps
 
-![Overall Architecture](docs/ms-docker-compose.png)
+![Overall Architecture](docs/MS-Overall-Architecture.png)
 
 ### High-Level Flow
 
