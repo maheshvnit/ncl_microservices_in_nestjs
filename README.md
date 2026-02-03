@@ -12,6 +12,22 @@
 
 ✅ Battle-tested locally before cloud deployment
 
+---
+
+### 🧠 Understanding the Core Concepts
+
+Before coding, it’s important to grasp what **NestJS** uses for microservices:
+
+**Transport layers** — how services communicate (e.g., TCP, RabbitMQ, Redis, NATS, gRPC). Each has its own driver but the NestJS interface stays consistent. 
+
+**Message patterns** — microservices route messages based on patterns, not HTTP routes. NestJS uses @MessagePattern() for request/response and @EventPattern() for event-based messages.
+
+   - **Request-Response**: Like a remote function call: send a command & wait for reply.
+
+   - **Event-based**: Fire an event; subscribers react; no direct response expected.
+
+---
+
 ![Overall Architecture](docs/ms-docker-compose.png)
 
 ## Open Source Monitoring Stack
@@ -107,20 +123,6 @@ This guide focuses on **TCP** for simplicity — messaging brokers like Kafka/Ra
    - Stores and indexes traces
 5. **Grafana**
    - Single pane of glass for logs, metrics, and traces
-
----
-
-### 🧠 Understanding the Core Concepts
-
-Before coding, it’s important to grasp what **NestJS** uses for microservices:
-
-**Transport layers** — how services communicate (e.g., TCP, RabbitMQ, Redis, NATS, gRPC). Each has its own driver but the NestJS interface stays consistent. 
-
-**Message patterns** — microservices route messages based on patterns, not HTTP routes. NestJS uses @MessagePattern() for request/response and @EventPattern() for event-based messages.
-
-   - **Request-Response**: Like a remote function call: send a command & wait for reply.
-
-   - **Event-based**: Fire an event; subscribers react; no direct response expected.
 
 ---
 
