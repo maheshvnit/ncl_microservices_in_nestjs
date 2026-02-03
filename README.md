@@ -1,4 +1,4 @@
-# Implementing Microservices in NodeJs/NestJS
+# Implementing Microservices in NodeJS/NestJS
 
 🚀 Production-Grade Microservices in NodeJS/NestJS
 
@@ -73,7 +73,7 @@ All components are orchestrated via a single docker-compose.yml to spin up the f
 Here’s what the core folders represent:
 
 ```
-├── nest-ms-platform/        # Sample NestJS Microservices
+├── nest-ms-platform/        # Sample NestJS Microservices with observability
 ├── grafana/                 # Grafana provisioning (datasources)
 ├── loki/                    # Loki config
 ├── prometheus/              # Prometheus config
@@ -214,6 +214,70 @@ All components run via **Docker Compose**:
 
 ---
 
+## What We Are Building (Clear Target)
+
+# Final System (Local)
+
+```
+┌────────────┐
+│  Grafana   │◄──────────────┐
+└────────────┘               │
+┌────────────┐   ┌───────────┴───────────┐
+│ Prometheus │   │   Observability Stack │
+└────────────┘   │  (nclmonitoring)      │
+┌────────────┐   │                       │
+│   Loki     │   │  Metrics / Logs /     │
+└────────────┘   │  Traces / Alerts      │
+┌────────────┐   └───────────▲───────────┘
+│   Tempo    │               │
+└────────────┘               │
+                             
+┌──────────────────────────────────────────┐
+│               API Gateway                │
+│        NestJS (HTTP + OTel)              │
+└──────────────▲───────────────▲──────────┘
+               │ TCP            │ TCP
+┌──────────────┴──────┐ ┌──────┴─────────┐
+│   User Service      │ │  Order Service │
+│ NestJS Microservice │ │ NestJS MS      │
+└──────────────▲──────┘ └──────▲─────────┘
+               │ TCP            │ TCP
+        ┌──────┴─────────┐
+        │ Payment Service │
+        │ NestJS MS       │
+        └────────────────┘
+
+````
+
+---
+
+
+## 🛠 Prerequisites
+
+
+# A. Prerequisites
+
+```
+# Node.js >= 20
+node -v
+npm -v
+
+# Docker >= 24
+docker --version
+
+# Docker Compose v2
+docker compose version
+````
+
+# B. Prerequisites
+Install the following: NestJs CLI
+
+```
+# Nest CLI
+npm install -g @nestjs/cli
+````
+
+---
 
 ## ▶️ Getting Started
 
