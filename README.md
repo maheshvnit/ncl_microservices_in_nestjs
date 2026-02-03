@@ -18,7 +18,7 @@
 
 Before coding, it’s important to grasp what **NestJS** uses for microservices:
 
-**Transport layers** — how services communicate (e.g., TCP, RabbitMQ, Redis, NATS, gRPC). Each has its own driver but the NestJS interface stays consistent. 
+**Transport layers** — how services communicate (e.g., TCP, RabbitMQ/Kafka, Redis, NATS, gRPC). Each has its own driver but the NestJS interface stays consistent. 
 
 **Message patterns** — microservices route messages based on patterns, not HTTP routes. NestJS uses @MessagePattern() for request/response and @EventPattern() for event-based messages.
 
@@ -252,10 +252,10 @@ All components run via **Docker Compose**:
 ---
 
 
-## 🛠 Prerequisites
+# 🛠 Prerequisites
 
 
-# A. Prerequisites
+## A. Prerequisites
 
 ```
 # Node.js >= 20
@@ -269,7 +269,7 @@ docker --version
 docker compose version
 ````
 
-# B. Prerequisites
+## B. Prerequisites
 Install the following: NestJs CLI
 
 ```
@@ -356,6 +356,12 @@ docker compose up --build
 ![Payments](docs/Explore-Payments.png)
 
 
+- Charge payment via Post API from cli
+
+
+```
+curl -X POST http://localhost:4040/pay   -H "Idempotency-Key: test-124"   -d '{ "amount": 100 }'
+````
 
 ---
 
