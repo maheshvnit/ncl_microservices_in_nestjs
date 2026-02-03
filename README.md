@@ -75,9 +75,9 @@ Here’s what the core folders represent:
 
 We will build:
 
-   -  3 Microservices (User, Order, Payment)
+   -  **3 Microservices** (User, Order, Payment)
 
-   -  1 API Gateway (HTTP entry point)
+   -  **1 API Gateway** (HTTP entry point)
 
    -  **Local Docker Compose stack** to orchestrate containers
 
@@ -110,6 +110,20 @@ This guide focuses on **TCP** for simplicity — messaging brokers like Kafka/Ra
 
 ---
 
+### 🧠 Understanding the Core Concepts
+
+Before coding, it’s important to grasp what **NestJS** uses for microservices:
+
+**Transport layers** — how services communicate (e.g., TCP, RabbitMQ, Redis, NATS, gRPC). Each has its own driver but the NestJS interface stays consistent. 
+
+**Message patterns** — microservices route messages based on patterns, not HTTP routes. NestJS uses @MessagePattern() for request/response and @EventPattern() for event-based messages.
+
+   - **Request-Response**: Like a remote function call: send a command & wait for reply.
+
+   - **Event-based**: Fire an event; subscribers react; no direct response expected.
+
+---
+
 ## 🔍 Observability Pillars
 
     ### ✨ Features
@@ -131,6 +145,7 @@ This guide focuses on **TCP** for simplicity — messaging brokers like Kafka/Ra
     - ✅ Log ↔ Metric ↔ Trace correlation using traceId
  
 
+---
 
 ---
 
