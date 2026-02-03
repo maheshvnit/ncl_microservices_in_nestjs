@@ -71,7 +71,19 @@ Here’s what the core folders represent:
 
 ---
 
-## 🧱 Architecture Overview
+## 🧱 Goal & Architecture Overview
+
+We will build:
+
+   3 Microservices (User, Order, Payment)
+
+   1 API Gateway (HTTP entry point)
+
+Local Docker Compose stack to orchestrate containers
+
+Each microservice will handle its own logic and communicate with others via NestJS microservice Transport (TCP). 
+
+This guide focuses on TCP for simplicity — messaging brokers like Kafka/RabbitMQ are optional next steps
 
 ![Overall Architecture](docs/ms-docker-compose.png)
 
