@@ -1,4 +1,4 @@
-# Microservices in NodeJS/NestJS
+# Implementing Microservices in NodeJs/NestJS
 
 🚀 Production-Grade Microservices in NodeJS/NestJS
 
@@ -9,7 +9,7 @@
 ✅ Strong Idempotency guarantees 
 
 ✅ Full Observability (Metrics, Logs, Traces)
- 
+
 ✅ Battle-tested locally before cloud deployment
 
 ## Open Source Monitoring Stack
@@ -212,14 +212,14 @@ All components run via **Docker Compose**:
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/maheshvnit/nclmonitoring.git
-cd nclmonitoring
+git clone https://github.com/maheshvnit/ncl_microservices_in_nestjs
+cd ncl_microservices_in_nestjs
 ```
 
-### 2️⃣ Start the Stack
+### 2️⃣ Start first the Observability Stack
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### 3️⃣ Access Services (🌐 Service Endpoints)
@@ -240,34 +240,47 @@ docker-compose up -d
 
 ---
 
-## 📈 Grafana Dashboards
+### 4 Next start the NodeJS/NestJS Microservices Stack in other tab/terminal
 
-![Grafana](docs/grafana.png)
+```bash
+cd nest-ms-platform
+docker compose up --build
+```
 
-- Logs Explorer (Loki)
-![Grafana](docs/Explore-Loki-Grafana-01-23-2026_09_03_PM.png)
+### 5 Access Services (🌐 Service Endpoints)
 
-- Metrics Dashboards (Prometheus)
-![Grafana](docs/Explore-Prometheus-Grafana-01-23-2026_09_04_PM.png)
+| Service             | URL                            |
+|---------------------|--------------------------------|
+| API Gateway         | http://localhost:4040          |
+| Users endpoint      | http://localhost:4040/users    |
+| Orders endpoint     | http://localhost:4040/orders   |
+| Payments endpoint   | http://localhost:4040/payments |
 
-- Trace Viewer (Tempo)
-![Grafana](docs/Explore-Tempo-Tempo-Grafana-01-23-2026_09_01_PM.png)
 
-- Cross-navigation via `traceId`
+
+- API Gateway: http://localhost:4040
+
+- Users endpoint: http://localhost:4040/users
+
+- Orders endpoint: http://localhost:4040/orders
+
+- Payments endpoint: http://localhost:4040/payments
+
 
 ---
 
-## 🧠 Why This Matters
+## 📈 Grafana Dashboards
 
-Traditional monitoring tells you **something is broken**.
+- Users
+![Users](docs/Explore-Users.png)
 
-This setup tells you:
-- ❌ What failed
-- 📍 Where it failed
-- 🧠 Why it failed
-- ⏱️ How long it took
+- Orders
+![Orders](docs/Explore-Orders.png)
 
-That’s **real observability**.
+- Payments
+![Payments](docs/Explore-Payments.png)
+
+
 
 ---
 
@@ -284,7 +297,7 @@ That’s **real observability**.
 
 | Category      | Tool                    |
 | ------------- | ----------------------- |
-| Backend       | NestJS                  |
+| Microservices | NestJS                  |
 | Logging       | Pino                    |
 | Metrics       | Prometheus              |
 | Tracing       | OpenTelemetry           |
