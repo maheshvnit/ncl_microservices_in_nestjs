@@ -159,15 +159,15 @@ nest-ms-platform/
 │   ├── src/
 │   ├── Dockerfile
 │   └── package.json
-└── order-service/          # TCP based user-service microservice
+└── order-service/          # TCP based order-service microservice
 │   ├── src/
 │   ├── Dockerfile
 │   └── package.json
-└── payment-service/        # TCP based user-service microservice
+└── payment-service/        # TCP based payment-service microservice
 │   ├── src/
 │   ├── Dockerfile
 │   └── package.json
-└── docker-compose.yml      # Docker Compose setup
+└── docker-compose.yml      # Microservices Docker Compose setup with redis
 
 ````
 
