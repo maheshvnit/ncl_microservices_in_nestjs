@@ -269,13 +269,16 @@ docker compose up --build
 
 ---
 
-## 📈 Grafana Dashboards
+## 📈 Now you will see user data coming from the microservice, like
+
 
 - Users
 ![Users](docs/Explore-Users.png)
 
+
 - Orders
 ![Orders](docs/Explore-Orders.png)
+
 
 - Payments
 ![Payments](docs/Explore-Payments.png)
