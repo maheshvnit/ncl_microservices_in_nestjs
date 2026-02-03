@@ -1,10 +1,15 @@
 # Microservices in NodeJS/NestJS
 
-🚀 Production-Grade Microservices in NodeJS/NestJS 
+🚀 Production-Grade Microservices in NodeJS/NestJS
+
 ✅ NodeJS/NestJS Microservices 
+
 ✅ Retry + Circuit Breaker policies 
+
 ✅ Strong Idempotency guarantees 
-✅ Full Observability (Metrics, Logs, Traces) 
+
+✅ Full Observability (Metrics, Logs, Traces)
+ 
 ✅ Battle-tested locally before cloud deployment
 
 ## Open Source Monitoring Stack
