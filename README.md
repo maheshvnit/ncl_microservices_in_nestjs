@@ -362,6 +362,10 @@ docker compose up --build
 ```
 curl -X POST http://localhost:4040/pay   -H "Idempotency-Key: test-124"   -d '{ "amount": 100 }'
 ````
+![Charge payment](docs/Explore-Payments-Charge-1.png)
+![Charge payment](docs/Explore-Payments-Charge-2.png)
+![Charge payment](docs/Explore-Payments-Charge-3.png)
+
 
 ---
 
