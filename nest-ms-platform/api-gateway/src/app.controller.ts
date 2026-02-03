@@ -1,4 +1,5 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Get, Post, Inject, Req } from '@nestjs/common';
+import type { Request } from 'express';
 import { ClientProxy } from '@nestjs/microservices';
 import { ResilientClient } from './common/resilience/resilient-client';
 
@@ -54,5 +55,19 @@ export class AppController {
   @Get('/payments')
   payments() {
     return this.payment.send({ cmd: 'get_payments' }, {});
+  }
+
+  @Post('/pay')
+  //async charge(@Req() req: Request) {
+  charge(@Req() req: Request) {
+    //return this.payment.send({ cmd: 'charge' }, {});
+
+    return this.payment.send(
+        { cmd: 'charge' },
+        {
+          amount: 100,
+          idempotencyKey: req.headers['idempotency-key'],
+        },
+      );
   }
 }

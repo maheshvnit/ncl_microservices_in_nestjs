@@ -6,6 +6,7 @@ import { TcpTraceServerInterceptor } from './common/interceptors/tcp-trace-serve
 import { traceContext } from './common/middleware/trace-context';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { IdempotencyService } from './common/idempotency.service';
 
 @Module({
   imports: [
@@ -33,11 +34,12 @@ import { AppService } from './app.service';
   ],
   controllers: [AppController],
   providers: [
-    AppService,
     {
       provide: APP_INTERCEPTOR,
       useClass: TcpTraceServerInterceptor,
     },
+    IdempotencyService,
+    AppService,
   ],
 })
 export class AppModule {}

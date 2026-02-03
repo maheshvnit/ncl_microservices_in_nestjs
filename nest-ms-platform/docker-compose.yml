@@ -29,8 +29,17 @@ services:
   payment-service:
     build: ./payment-service
     ports:
-      - "9468:9468"      
+      - "9468:9468"
+    depends_on:
+      - redis            
     networks: [observability]
+
+  redis:
+    image: redis
+    ports:
+      - "63791:6379"
+    networks: [observability]
+
 
 networks:
   observability:

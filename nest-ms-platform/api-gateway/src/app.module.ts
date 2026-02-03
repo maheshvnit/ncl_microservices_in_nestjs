@@ -3,6 +3,7 @@ import {
   Module,
   NestModule,
 } from '@nestjs/common';
+//import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -11,6 +12,7 @@ import { LoggerModule } from 'nestjs-pino';
 //import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 
 import { TraceIdMiddleware } from './common/middleware/trace-id.middleware';
+//import { IdempotencyInterceptor } from './common/interceptors/idempotency.interceptor';
 
 @Module({
   imports: [
@@ -57,6 +59,13 @@ import { TraceIdMiddleware } from './common/middleware/trace-id.middleware';
   ],
   controllers: [AppController],
   providers: [AppService],
+  // providers: [
+  //   AppService,
+  //   {
+  //     provide: APP_INTERCEPTOR,
+  //     useClass: IdempotencyInterceptor,
+  //   },
+  // ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
